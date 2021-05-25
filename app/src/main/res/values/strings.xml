@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">BreakingBadApp</string>
+    <string name="random_characters_text">Случайный персонаж</string>
+    <string name="random_characters_name">Имя персонажа</string>
+    <string name="random_character_image_description">Картинка случайного персонажа</string>
+    <string name="random_character_birthday">09-07-1958</string>
+    <string name="random_character_birthday_label">День рождения: </string>
+    <string name="random_character_status_label">Статус: </string>
+    <string name="random_character_nickname_label">Прозвище: </string>
+    <string name="random_character_actor_label">Актёр: </string>
+    <string name="random_character_status">Живой</string>
+    <string name="random_character_nickname">Никнейм</string>
+    <string name="random_character_actor">Имя Актера</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
