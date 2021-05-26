@@ -2,6 +2,7 @@ package com.example.breakingbadapp.di.module
 
 import com.example.breakingbadapp.domainlayer.network.breakingbad.BreakingBadApi
 import com.example.breakingbadapp.domainlayer.repository.CharacterRepository
+import com.example.breakingbadapp.domainlayer.repository.QuoteRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -22,4 +23,9 @@ class BreakingBadApiModule {
     @Singleton
     fun provideCharacterRepository(api: BreakingBadApi): CharacterRepository =
         CharacterRepository(api)
+
+    @Provides
+    @Singleton
+    fun provideQuoteRepository(api: BreakingBadApi): QuoteRepository =
+        QuoteRepository(api)
 }

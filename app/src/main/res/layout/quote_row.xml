@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/small_margin">
+
+    <TextView
+        android:id="@+id/author_label"
+        style="@style/quote_list_element"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/author_label"
+        app:layout_constraintEnd_toEndOf="@+id/quote_label"
+        app:layout_constraintStart_toStartOf="@+id/quote_label"
+        app:layout_constraintTop_toBottomOf="@+id/quote_text" />
+
+    <TextView
+        style="@style/quote_list_element"
+        android:id="@+id/quote_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quote_label"
+        app:layout_constraintEnd_toStartOf="@+id/quote_text"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/quote_text"
+        style="@style/quote_list_element"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/quote_label"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="За свою карьеру я пропустил более 9000 бросков, проиграл почти 300 игр. 26 раз мне доверяли сделать финальный победный бросок, и я промахивался. Я терпел поражения снова, и снова, и снова. И именно поэтому я добился успеха." />
+
+    <TextView
+        style="@style/quote_list_element"
+        android:id="@+id/author_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/author_label"
+        app:layout_constraintEnd_toEndOf="@+id/quote_text"
+        app:layout_constraintStart_toStartOf="@+id/quote_text"
+        tools:text="Константин Константинович" />
+</androidx.constraintlayout.widget.ConstraintLayout>
