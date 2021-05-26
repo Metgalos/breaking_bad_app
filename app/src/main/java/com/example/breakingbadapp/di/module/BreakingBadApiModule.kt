@@ -1,6 +1,7 @@
 package com.example.breakingbadapp.di.module
 
 import com.example.breakingbadapp.domainlayer.network.breakingbad.BreakingBadApi
+import com.example.breakingbadapp.domainlayer.repository.CharacterRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -16,4 +17,9 @@ class BreakingBadApiModule {
             .baseUrl(BreakingBadApi.BASE_URL)
             .build()
             .create(BreakingBadApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCharacterRepository(api: BreakingBadApi): CharacterRepository =
+        CharacterRepository(api)
 }

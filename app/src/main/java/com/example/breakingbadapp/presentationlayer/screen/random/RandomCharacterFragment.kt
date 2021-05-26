@@ -35,7 +35,7 @@ class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
 
     override fun getRootViewLayoutId(): Int = R.layout.fragment_random_character
 
-    override fun displayRandomCharacter(serialCharacter: SerialCharacter) {
+    override fun setRandomCharacterData(serialCharacter: SerialCharacter) {
         with (binding) {
             randomCharacterName.text = serialCharacter.name ?: EMPTY_FIELD_TEXT
             randomCharacterBirthday.text = serialCharacter.birthday ?: EMPTY_FIELD_TEXT

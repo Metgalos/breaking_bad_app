@@ -8,5 +8,5 @@ data class SerialCharacter(
     @SerializedName("status") var status: String?,
     @SerializedName("nickname") var nickname: String?,
     @SerializedName("portrayed") var actor: String?,
-    @SerializedName("picture") var picture: String?
+    @SerializedName("img") var picture: String?
 )
