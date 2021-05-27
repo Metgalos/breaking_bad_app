@@ -6,6 +6,7 @@ import com.example.breakingbadapp.domainlayer.repository.QuoteRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import javax.inject.Scope
 import javax.inject.Singleton
 
 @Module

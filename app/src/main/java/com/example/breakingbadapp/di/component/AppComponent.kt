@@ -5,6 +5,7 @@ import com.example.breakingbadapp.presentationlayer.screen.main.MainActivity
 import com.example.breakingbadapp.presentationlayer.screen.main.MainPresenter
 import com.example.breakingbadapp.presentationlayer.screen.random.RandomCharacterFragment
 import com.example.breakingbadapp.presentationlayer.screen.random.RandomCharacterPresenter
+import com.example.breakingbadapp.presentationlayer.screen.search.SearchQuotePresenter
 import dagger.Component
 import javax.inject.Singleton
 
@@ -22,4 +23,6 @@ interface AppComponent {
 
     fun inject(randomCharacterFragment: RandomCharacterFragment)
     fun inject(randomCharacterPresenter: RandomCharacterPresenter)
+
+    fun inject(searchQuotePresenter: SearchQuotePresenter)
 }

@@ -18,4 +18,5 @@
     <string name="name">Имя</string>
     <string name="quote_label">Цитата: </string>
     <string name="author_label">Автор: </string>
+    <string name="quote_not_found">Цитат не найдено</string>
 </resources>

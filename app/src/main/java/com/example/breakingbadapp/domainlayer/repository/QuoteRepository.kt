@@ -19,8 +19,8 @@ class QuoteRepository @Inject constructor(
         onError: (Throwable) -> Unit
     ): Disposable =
 
-        Single.create<Response<List<Quote>>> {
-            api.getQuoteByAuthor(author)
+        Single.create<Response<List<Quote>>> { subscriber ->
+            subscriber.onSuccess(api.getQuoteByAuthor(author).execute())
         }
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())

@@ -7,6 +7,32 @@
     android:padding="@dimen/fragment_padding">
 
     <TextView
+        android:id="@+id/message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quote_not_found"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/medium_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/character_name_edit"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/response_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:textColor="@color/error"
+        android:textSize="15sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/character_name_edit"
+        tools:text="Произошла непредвиденная ошибка"
+        tools:visibility="visible" />
+
+    <TextView
         android:id="@+id/character_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,9 +48,10 @@
         android:layout_height="wrap_content"
         android:ems="12"
         android:inputType="textPersonName"
-        android:text="@string/name"
+        android:hint="@string/name"
         android:textAlignment="center"
         android:textSize="12sp"
+        android:imeOptions="actionGo"
         app:layout_constraintBaseline_toBaselineOf="@+id/character_name_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -34,11 +61,11 @@
         android:id="@+id/quotes_recycleview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/character_name_label"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/response_error"
+        tools:visibility="visible">
+
+    </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

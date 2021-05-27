@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/borderbottom"
     android:padding="@dimen/small_margin">
 
     <TextView
@@ -39,12 +40,13 @@
         tools:text="За свою карьеру я пропустил более 9000 бросков, проиграл почти 300 игр. 26 раз мне доверяли сделать финальный победный бросок, и я промахивался. Я терпел поражения снова, и снова, и снова. И именно поэтому я добился успеха." />
 
     <TextView
-        style="@style/quote_list_element"
         android:id="@+id/author_name"
+        style="@style/quote_list_element"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBaseline_toBaselineOf="@+id/author_label"
         app:layout_constraintEnd_toEndOf="@+id/quote_text"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/quote_text"
         tools:text="Константин Константинович" />
 </androidx.constraintlayout.widget.ConstraintLayout>

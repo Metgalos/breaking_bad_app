@@ -17,6 +17,6 @@ interface BreakingBadApi {
 
     @GET("quote")
     fun getQuoteByAuthor(
-        @Query("author") author: String
+        @Query("author", encoded = true) author: String
     ): Call<List<Quote>>
 }

@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(
