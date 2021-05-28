@@ -14,7 +14,8 @@ import javax.inject.Singleton
     AppModule::class,
     BreakingBadApiModule::class,
     NetworkModule::class,
-    BindModule::class
+    BindModule::class,
+    DatabaseModule::class,
 ])
 @Singleton
 interface AppComponent {

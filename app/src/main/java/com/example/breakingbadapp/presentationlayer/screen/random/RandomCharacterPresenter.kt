@@ -3,7 +3,9 @@ package com.example.breakingbadapp.presentationlayer.screen.random
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.breakingbadapp.App
+import com.example.breakingbadapp.domainlayer.database.repository.CharacterResponseRepository
 import com.example.breakingbadapp.domainlayer.repository.CharacterRepository
+import com.example.breakingbadapp.extension.toCharacterResponse
 import com.github.terrakok.cicerone.Router
 import javax.inject.Inject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -19,6 +21,9 @@ class RandomCharacterPresenter : MvpPresenter<RandomCharacterView>() {
     @Inject
     lateinit var characterRepository: CharacterRepository
 
+    @Inject
+    lateinit var dbRepository: CharacterResponseRepository
+
     override fun onFirstViewAttach() {
         App.appComponent.inject(   this)
         super.onFirstViewAttach()
@@ -29,8 +34,14 @@ class RandomCharacterPresenter : MvpPresenter<RandomCharacterView>() {
             onSuccess = { response ->
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        viewState.setRandomCharacterData(it.first())
+                        val character = it.first()
+                        viewState.setRandomCharacterData(character)
                         viewState.showCharacter()
+                        dbRepository.insert(
+                            character.toCharacterResponse(),
+                            {},
+                            { throwable ->  Timber.e(throwable) }
+                        )
                     }
                 } else {
                     Timber.e("Random character response error")

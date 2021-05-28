@@ -25,8 +25,14 @@ class MainPresenter : MvpPresenter<MainView>() {
     fun onBottomNavigationItemSelected(itemId: Int): Boolean {
         if (itemId == currentMenuItem) return false
         when (itemId) {
-            R.id.random_character -> navigateToRandomCharacterFragment().also { return true }
-            R.id.search_quote -> navigateToSearchCharacterFragment().also { return true }
+            R.id.random_character -> navigateToRandomCharacterFragment().also {
+                currentMenuItem = R.id.random_character
+                return true
+            }
+            R.id.search_quote -> navigateToSearchCharacterFragment().also {
+                currentMenuItem = R.id.search_quote
+                return true
+            }
             else -> return false
         }
     }
