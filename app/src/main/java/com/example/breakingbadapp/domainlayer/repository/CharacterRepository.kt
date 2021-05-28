@@ -7,7 +7,6 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Response
-import timber.log.Timber
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(
@@ -15,7 +14,7 @@ class CharacterRepository @Inject constructor(
 ) {
 
     fun getRandomCharacter(
-        onSuccess: (Response<List<SerialCharacter>>) -> Unit,
+        onComplete: (Response<List<SerialCharacter>>) -> Unit,
         onError: (Throwable) -> Unit
     ): Disposable {
 
@@ -24,6 +23,6 @@ class CharacterRepository @Inject constructor(
         }
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(onSuccess, onError)
+            .subscribe(onComplete, onError)
     }
 }

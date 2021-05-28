@@ -8,8 +8,6 @@ import com.example.breakingbadapp.domainlayer.repository.CharacterRepository
 import com.example.breakingbadapp.extension.toCharacterResponse
 import com.github.terrakok.cicerone.Router
 import javax.inject.Inject
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
 @InjectViewState
@@ -31,7 +29,7 @@ class RandomCharacterPresenter : MvpPresenter<RandomCharacterView>() {
 
     fun onRandomCharacterTapped() {
         characterRepository.getRandomCharacter(
-            onSuccess = { response ->
+            onComplete = { response ->
                 if (response.isSuccessful) {
                     response.body()?.let {
                         val character = it.first()
