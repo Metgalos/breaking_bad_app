@@ -7,6 +7,8 @@ import com.example.breakingbadapp.domainlayer.database.repository.CharacterRespo
 import com.example.breakingbadapp.domainlayer.repository.CharacterRepository
 import com.example.breakingbadapp.extension.toCharacterResponse
 import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 import timber.log.Timber
 
@@ -35,11 +37,12 @@ class RandomCharacterPresenter : MvpPresenter<RandomCharacterView>() {
                         val character = it.first()
                         viewState.setRandomCharacterData(character)
                         viewState.showCharacter()
-                        dbRepository.insert(
-                            character.toCharacterResponse(),
-                            {},
-                            { throwable ->  Timber.e(throwable) }
-                        )
+                        dbRepository.insert(character.toCharacterResponse())
+                            .subscribeOn(Schedulers.computation())
+                            .subscribe(
+                                {},
+                                { throwable: Throwable? -> Timber.e(throwable) }
+                            )
                     }
                 } else {
                     Timber.e("Random character response error")

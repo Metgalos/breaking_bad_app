@@ -9,4 +9,8 @@
         android:id="@+id/search_quote"
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/search_quote" />
+    <item
+        android:id="@+id/random_character_history"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="@string/random_character_history" />
 </menu>

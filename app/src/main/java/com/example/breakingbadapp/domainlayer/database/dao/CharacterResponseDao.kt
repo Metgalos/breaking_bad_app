@@ -8,8 +8,8 @@ import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 @Dao
 interface CharacterResponseDao {
 
-    @Query("SELECT * FROM $TABLE_NAME ORDER BY datetime DESC")
-    fun getAll(): List<CharacterResponse>
+    @Query("SELECT * FROM $TABLE_NAME ORDER BY datetime DESC LIMIT :pageSize OFFSET (:page - 1) * :pageSize")
+    fun getPaged(page: Int, pageSize: Int): List<CharacterResponse>
 
     @Insert
     fun insert(character: CharacterResponse)
