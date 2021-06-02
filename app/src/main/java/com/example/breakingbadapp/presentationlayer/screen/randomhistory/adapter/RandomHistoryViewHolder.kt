@@ -32,7 +32,8 @@ class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             responseDatetime.text = character.datetime
 
             character.picture_url?.let {
-                imageLoader.load(LoadPhotoConfig(url = it), characterPicture)
+                val config = LoadPhotoConfig(url = it, placeholder = R.drawable.avatar_placeholder)
+                imageLoader.load(config, characterPicture)
             }
         }
     }
