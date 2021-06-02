@@ -5,6 +5,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.example.breakingbadapp.App
 import com.example.breakingbadapp.R
 import com.example.breakingbadapp.presentationlayer.screen.random.RandomCharacterFragment
+import com.example.breakingbadapp.presentationlayer.screen.randomhistory.RandomHistoryFragment
 import com.example.breakingbadapp.presentationlayer.screen.search.SearchQuoteFragment
 import com.github.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -33,8 +34,16 @@ class MainPresenter : MvpPresenter<MainView>() {
                 currentMenuItem = R.id.search_quote
                 return true
             }
+            R.id.random_character_history -> navigateToRandomCharacterHistoryFragment().also {
+                currentMenuItem = R.id.random_character_history
+                return true
+            }
             else -> return false
         }
+    }
+
+    private fun navigateToRandomCharacterHistoryFragment() {
+        router.replaceScreen(RandomHistoryFragment.getScreen())
     }
 
     private fun loadInitialScreen() {

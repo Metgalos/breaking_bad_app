@@ -19,4 +19,5 @@
     <string name="quote_label">Цитата: </string>
     <string name="author_label">Автор: </string>
     <string name="quote_not_found">Цитат не найдено</string>
+    <string name="random_character_history">История случайных персонажей</string>
 </resources>
