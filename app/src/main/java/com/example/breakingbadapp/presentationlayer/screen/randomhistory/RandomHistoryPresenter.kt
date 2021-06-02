@@ -9,7 +9,6 @@ import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.domainlayer.database.repository.CharacterResponseRepository
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryAdapter
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
@@ -43,6 +42,12 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
                 getHistoryItems(nextPage) { recyclerView.removeOnScrollListener(this) }
             }
         }
+
+    fun remove(character: CharacterResponse) {
+        repository.remove(character)
+            .subscribeOn(Schedulers.io())
+            .subscribe({}, { throwable: Throwable -> Timber.e(throwable) })
+    }
 
     private fun getHistoryItems(page: Int, onLastPage: () -> Unit = {}): Disposable =
         repository.getPaged(page, PAGE_SIZE)

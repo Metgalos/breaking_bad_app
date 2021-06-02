@@ -22,4 +22,9 @@ abstract class AutoloadingAdapter<R, T : RecyclerView.ViewHolder> : RecyclerView
         this.data.addAll(data)
         notifyItemRangeChanged(lastIndex, size)
     }
+
+    fun deleteItem(item: R) {
+        data.remove(item)
+        notifyDataSetChanged()
+    }
 }
