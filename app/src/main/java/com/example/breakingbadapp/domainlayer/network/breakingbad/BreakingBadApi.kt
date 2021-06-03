@@ -3,7 +3,6 @@ package com.example.breakingbadapp.domainlayer.network.breakingbad
 import com.example.breakingbadapp.datalayer.response.Quote
 import com.example.breakingbadapp.datalayer.response.SerialCharacter
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -19,4 +18,7 @@ interface BreakingBadApi {
     fun getQuoteByAuthor(
         @Query("author", encoded = true) author: String
     ): Call<List<Quote>>
+
+    @GET("characters")
+    fun getCharacters(): Call<List<SerialCharacter>>
 }

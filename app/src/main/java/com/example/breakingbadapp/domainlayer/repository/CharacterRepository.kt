@@ -25,4 +25,11 @@ class CharacterRepository @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(onComplete, onError)
     }
+
+    fun getCharacters(): Single<Response<List<SerialCharacter>>> =
+        Single.create<Response<List<SerialCharacter>>> { subscriber ->
+            subscriber.onSuccess(api.getCharacters().execute())
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 }
