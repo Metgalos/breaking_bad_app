@@ -1,6 +1,7 @@
 package com.example.breakingbadapp.domainlayer.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
@@ -13,6 +14,9 @@ interface CharacterResponseDao {
 
     @Insert
     fun insert(character: CharacterResponse)
+
+    @Delete
+    fun remove(character: CharacterResponse)
 
     companion object {
         private const val TABLE_NAME = "character_responses"

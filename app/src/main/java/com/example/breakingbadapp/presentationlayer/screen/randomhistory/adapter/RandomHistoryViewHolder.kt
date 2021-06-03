@@ -23,7 +23,7 @@ class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         App.appComponent.inject(this)
     }
 
-    fun bind(character: CharacterResponse) {
+    fun bind(character: CharacterResponse, listener: RandomHistoryViewHolderListener?) {
         with (binding) {
             characterName.text = character.name
             characterStatus.text = character.status
@@ -32,7 +32,12 @@ class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             responseDatetime.text = character.datetime
 
             character.picture_url?.let {
-                imageLoader.load(LoadPhotoConfig(url = it), characterPicture)
+                val config = LoadPhotoConfig(url = it, placeholder = R.drawable.avatar_placeholder)
+                imageLoader.load(config, characterPicture)
+            }
+
+            binding.removeIcon.setOnClickListener {
+                listener?.onDeleteItem(character)
             }
         }
     }
