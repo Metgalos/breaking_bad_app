@@ -20,5 +20,8 @@ interface BreakingBadApi {
     ): Call<List<Quote>>
 
     @GET("characters")
-    fun getCharacters(): Call<List<SerialCharacter>>
+    fun getCharacters(
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int
+    ): Call<List<SerialCharacter>>
 }
