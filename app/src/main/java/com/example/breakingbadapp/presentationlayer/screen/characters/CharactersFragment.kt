@@ -43,8 +43,8 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
         return binding.root
     }
 
-    override fun addCharacters(characters: List<SerialCharacter>) {
-        characters.map { CharacterFragment(it) }.let {
+    override fun addCharacters(characters: List<CharacterFragment>) {
+        characters.let {
             adapter.addItems(it)
             if (it.isEmpty()) adapter.onLoadingEnd()
         }

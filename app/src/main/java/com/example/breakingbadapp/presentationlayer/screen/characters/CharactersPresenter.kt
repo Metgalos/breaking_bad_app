@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.breakingbadapp.App
 import com.example.breakingbadapp.domainlayer.repository.CharacterRepository
+import com.example.breakingbadapp.presentationlayer.screen.character.CharacterFragment
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -22,6 +23,7 @@ class CharactersPresenter : MvpPresenter<CharactersFragmentView>() {
 
     fun getCharacters() {
         repository.getCharacters(page, PAGE_SIZE)
+            .map { it.map { character -> CharacterFragment(character) } }
             .subscribe({ characters ->
                 viewState.hideProgressBar()
                 viewState.addCharacters(characters)
