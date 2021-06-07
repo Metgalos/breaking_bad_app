@@ -26,11 +26,10 @@ class CharacterRepository @Inject constructor(
             .subscribe(onComplete, onError)
     }
 
-    fun getCharacters(page: Int, pageSize: Int): Single<Response<List<SerialCharacter>>> =
-        Single.create<Response<List<SerialCharacter>>> { subscriber ->
-            val offset = (page - 1) * pageSize
-            subscriber.onSuccess(api.getCharacters(pageSize, offset).execute())
-        }
+    fun getCharacters(page: Int, pageSize: Int): Single<List<SerialCharacter>> {
+        val offset = (page - 1) * pageSize
+        return api.getCharacters(pageSize, offset)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+    }
 }

@@ -22,16 +22,10 @@ class CharactersPresenter : MvpPresenter<CharactersFragmentView>() {
 
     fun getCharacters() {
         repository.getCharacters(page, PAGE_SIZE)
-            .subscribe({ response ->
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        viewState.hideProgressBar()
-                        viewState.addCharacters(it)
-                        page ++
-                    }
-                } else {
-                    Timber.i("Character response is failed")
-                }
+            .subscribe({ characters ->
+                viewState.hideProgressBar()
+                viewState.addCharacters(characters)
+                page ++
             }, { t: Throwable -> Timber.e(t) })
     }
 
