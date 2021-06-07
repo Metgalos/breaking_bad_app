@@ -33,7 +33,14 @@ class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
         App.appComponent.inject(this)
         binding = FragmentRandomCharacterBinding.inflate(inflater, container, false)
 
+        visibleViews = listOf(
+            binding.randomCharacterProgressbar,
+            binding.randomCharacterPlaceholder,
+            binding.randomCharacterLayout
+        )
+
         binding.randomCharacterButton.setOnClickListener {
+            visibleOnly(binding.randomCharacterProgressbar)
             presenter.getRandomCharacter()
         }
         return binding.root
@@ -55,9 +62,7 @@ class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
                 imageLoader.load(LoadPhotoConfig(url), randomCharacterImage)
             }
         }
-
-        binding.randomCharacterPlaceholder.isVisible = false
-        binding.randomCharacterLayout.isVisible = true
+        visibleOnly(binding.randomCharacterLayout)
     }
 
     companion object {

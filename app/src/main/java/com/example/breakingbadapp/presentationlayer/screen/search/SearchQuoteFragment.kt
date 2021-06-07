@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.breakingbadapp.databinding.FragmentSearchQuoteBinding
@@ -25,8 +24,6 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
         QuoteListAdapter()
     }
 
-    lateinit var visibleElements: List<View>
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,22 +31,25 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
     ): View {
         binding = FragmentSearchQuoteBinding.inflate(inflater, container, false)
 
+        visibleViews = listOf(
+            binding.quotesRecycleview,
+            binding.responseError,
+            binding.messageText,
+            binding.searchQuotesProgressbar
+        )
+
         binding.quotesRecycleview.adapter = adapter
         binding.quotesRecycleview.layoutManager = LinearLayoutManager(requireContext())
 
-        visibleElements = listOf(
-            binding.quotesRecycleview,
-            binding.responseError,
-            binding.messageText
-        )
-
         binding.searchQuotesButton.setOnClickListener {
+            visibleOnly(binding.searchQuotesProgressbar)
             presenter.searchQuote(binding.characterNameEdit.text.toString())
         }
 
         binding.characterNameEdit.setOnEditorActionListener { v, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
+                    visibleOnly(binding.searchQuotesProgressbar)
                     presenter.searchQuote(v.text.toString())
                     return@setOnEditorActionListener true
                 }
@@ -71,10 +71,6 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
 
     override fun displayNotFoundMessage() {
         visibleOnly(binding.messageText)
-    }
-
-    private fun visibleOnly(item: View) {
-        visibleElements.forEach { element -> element.isVisible = (element == item) }
     }
 
     companion object {
