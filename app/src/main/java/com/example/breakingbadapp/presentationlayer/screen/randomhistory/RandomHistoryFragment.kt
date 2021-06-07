@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.breakingbadapp.databinding.FragmentRandomHistoryBinding
@@ -20,7 +21,7 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
 
     private lateinit var binding: FragmentRandomHistoryBinding
 
-    private val adapter by lazy {
+    private val viewAdapter by lazy {
         RandomHistoryAdapter().also { it.setListener(getAdapterListener()) }
     }
 
@@ -29,23 +30,25 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRandomHistoryBinding.inflate(inflater, container, false)
-        binding.characterResponseRecycleView.adapter = adapter
-        binding.characterResponseRecycleView.layoutManager = LinearLayoutManager(requireContext())
-
-        binding.characterResponseRecycleView.addOnScrollListener(presenter.getOnScrollListener())
+        binding.characterResponseRecycleView.apply {
+            this.adapter = viewAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            addOnScrollListener(presenter.getOnScrollListener())
+        }
 
         return binding.root
     }
 
     override fun addItems(characters: List<CharacterResponse>) {
-        adapter.addItems(characters)
+        viewAdapter.addItems(characters)
     }
 
     private fun getAdapterListener(): RandomHistoryViewHolderListener {
         return object : RandomHistoryViewHolderListener {
             override fun onDeleteItem(character: CharacterResponse) {
                 presenter.remove(character)
-                adapter.deleteItem(character)
+                viewAdapter.deleteItem(character)
             }
         }
     }
