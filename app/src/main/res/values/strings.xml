@@ -24,4 +24,5 @@
     <string name="prev_character_button">Предыдущий</string>
     <string name="next_character_button">Следующий</string>
     <string name="characters">Персонажи</string>
+    <string name="random_character_placeholder">Начните поиск, чтобы получить информацию о случайном персонаже.</string>
 </resources>

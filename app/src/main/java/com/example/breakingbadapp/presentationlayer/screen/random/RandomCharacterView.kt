@@ -7,7 +7,6 @@ import com.example.breakingbadapp.presentationlayer.base.BaseFragmentView
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface RandomCharacterView : BaseFragmentView {
-    fun setRandomCharacterData(serialCharacter: SerialCharacter)
     fun hideCharacter()
-    fun showCharacter()
+    fun showCharacter(serialCharacter: SerialCharacter)
 }
