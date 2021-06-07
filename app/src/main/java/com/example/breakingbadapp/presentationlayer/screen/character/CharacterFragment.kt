@@ -34,16 +34,16 @@ class CharacterFragment(
 
     private fun setCharacterData() {
         with(binding) {
-            character.picture?.let {
-                val config = LoadPhotoConfig(it, R.drawable.avatar_placeholder)
-                imageLoader.load(config, scrollCharacterPicture)
-            }
-
             scrollCharacterName.text = character.name
             scrollCharacterBirthday.text = character.birthday
             scrollCharacterStatus.text = character.status
             scrollCharacterNickname.text = character.nickname
             scrollCharacterActor.text = character.actor
+
+            character.picture?.let {
+                val config = LoadPhotoConfig(it, R.drawable.avatar_placeholder)
+                imageLoader.load(config, scrollCharacterPicture)
+            }
         }
     }
 }
