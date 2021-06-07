@@ -43,9 +43,13 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
             binding.messageText
         )
 
+        binding.searchQuotesButton.setOnClickListener {
+            presenter.searchQuote(binding.characterNameEdit.text.toString())
+        }
+
         binding.characterNameEdit.setOnEditorActionListener { v, actionId, _ ->
             when (actionId) {
-                EditorInfo.IME_ACTION_GO -> {
+                EditorInfo.IME_ACTION_SEARCH -> {
                     presenter.searchQuote(v.text.toString())
                     return@setOnEditorActionListener true
                 }

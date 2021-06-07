@@ -3,7 +3,6 @@ package com.example.breakingbadapp.presentationlayer.screen.search
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.breakingbadapp.App
-import com.example.breakingbadapp.domainlayer.database.repository.CharacterResponseRepository
 import com.example.breakingbadapp.domainlayer.repository.QuoteRepository
 import com.example.breakingbadapp.extension.forQuery
 import timber.log.Timber
