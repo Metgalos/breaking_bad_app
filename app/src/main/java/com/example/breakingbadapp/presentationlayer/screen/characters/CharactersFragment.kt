@@ -1,5 +1,6 @@
 package com.example.breakingbadapp.presentationlayer.screen.characters
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
         CharactersScreenSlideAdapter(this, listener)
     }
 
+    @SuppressLint("WrongConstant")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,6 +39,7 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
     ): View? {
         binding = FragmentCharactersBinding.inflate(inflater, container, false)
         binding.charactersPager.adapter = adapter
+        binding.charactersPager.offscreenPageLimit = OFFSCREEN_PAGE_LIMIT
         return binding.root
     }
 
@@ -52,6 +55,8 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
     }
 
     companion object {
+        private const val OFFSCREEN_PAGE_LIMIT = 3
+
         fun getScreen() = FragmentScreen { CharactersFragment() }
     }
 }
