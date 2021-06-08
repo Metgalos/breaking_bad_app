@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.breakingbadapp.databinding.FragmentSearchQuoteBinding
@@ -20,7 +21,7 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
 
     private lateinit var binding: FragmentSearchQuoteBinding
 
-    private val adapter: QuoteListAdapter by lazy {
+    private val viewAdapter: QuoteListAdapter by lazy {
         QuoteListAdapter()
     }
 
@@ -38,8 +39,11 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
             binding.searchQuotesProgressbar
         )
 
-        binding.quotesRecycleview.adapter = adapter
-        binding.quotesRecycleview.layoutManager = LinearLayoutManager(requireContext())
+        binding.quotesRecycleview.apply {
+            adapter = viewAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
 
         binding.searchQuotesButton.setOnClickListener {
             visibleOnly(binding.searchQuotesProgressbar)
@@ -61,7 +65,7 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
     }
 
     override fun displayQuotesList(quotes: List<Quote>) {
-        adapter.setData(quotes)
+        viewAdapter.setData(quotes)
         visibleOnly(binding.quotesRecycleview)
     }
 
