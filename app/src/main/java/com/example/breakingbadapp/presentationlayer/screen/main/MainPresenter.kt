@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.breakingbadapp.App
 import com.example.breakingbadapp.R
+import com.example.breakingbadapp.presentationlayer.screen.characters.CharactersFragment
 import com.example.breakingbadapp.presentationlayer.screen.random.RandomCharacterFragment
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.RandomHistoryFragment
 import com.example.breakingbadapp.presentationlayer.screen.search.SearchQuoteFragment
@@ -38,8 +39,16 @@ class MainPresenter : MvpPresenter<MainView>() {
                 currentMenuItem = R.id.random_character_history
                 return true
             }
+            R.id.characters -> navigateToCharacters().also {
+                currentMenuItem = R.id.characters
+                return true
+            }
             else -> return false
         }
+    }
+
+    private fun navigateToCharacters() {
+        router.replaceScreen(CharactersFragment.getScreen())
     }
 
     private fun navigateToRandomCharacterHistoryFragment() {

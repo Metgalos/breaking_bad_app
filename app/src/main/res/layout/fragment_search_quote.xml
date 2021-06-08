@@ -10,9 +10,9 @@
         android:id="@+id/message_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
         android:text="@string/quote_not_found"
         android:visibility="gone"
-        android:layout_marginTop="@dimen/medium_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/character_name_edit"
@@ -34,9 +34,9 @@
 
     <TextView
         android:id="@+id/character_name_label"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/character_name_label"
+        android:text="@string/character_name_enter_label"
         app:layout_constraintEnd_toStartOf="@+id/character_name_edit"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,15 +47,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="12"
-        android:inputType="textPersonName"
         android:hint="@string/name"
+        android:imeOptions="actionSearch"
+        android:inputType="textPersonName"
         android:textAlignment="center"
         android:textSize="12sp"
-        android:imeOptions="actionGo"
-        app:layout_constraintBaseline_toBaselineOf="@+id/character_name_label"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/character_name_label"
+        app:layout_constraintEnd_toStartOf="@+id/search_quotes_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/character_name_label" />
+
+    <ImageButton
+        android:id="@+id/search_quotes_button"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@color/transparent"
+        android:src="@android:drawable/ic_menu_search"
+        app:layout_constraintBottom_toBottomOf="@+id/character_name_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/character_name_edit"
+        app:layout_constraintTop_toTopOf="@+id/character_name_edit"
+        android:tint="@color/black"/>
+
+    <ProgressBar
+        android:id="@+id/search_quotes_progressbar"
+        android:layout_width="@dimen/progressbar_size"
+        android:layout_height="@dimen/progressbar_size"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quotes_recycleview"

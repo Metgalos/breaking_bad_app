@@ -48,7 +48,7 @@
             style="@style/character_response_row"
             android:layout_width="52dp"
             android:layout_height="18dp"
-            android:text="@string/random_character_status_label"
+            android:text="@string/character_status_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name_label" />
 
@@ -66,7 +66,7 @@
             style="@style/character_response_row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/random_character_nickname_label"
+            android:text="@string/character_nickname_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/status_label" />
 
@@ -84,7 +84,7 @@
             style="@style/character_response_row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/random_character_actor_label"
+            android:text="@string/character_actor_label"
             android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nickname_label" />

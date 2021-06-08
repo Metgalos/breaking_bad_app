@@ -13,7 +13,6 @@ import com.example.breakingbadapp.datalayer.response.SerialCharacter
 import com.example.breakingbadapp.domainlayer.service.imageloader.ImageLoader
 import com.example.breakingbadapp.presentationlayer.base.BaseFragment
 import com.github.terrakok.cicerone.androidx.FragmentScreen
-import timber.log.Timber
 import javax.inject.Inject
 
 class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
@@ -34,13 +33,24 @@ class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
         App.appComponent.inject(this)
         binding = FragmentRandomCharacterBinding.inflate(inflater, container, false)
 
+        visibleViews = listOf(
+            binding.randomCharacterProgressbar,
+            binding.randomCharacterPlaceholder,
+            binding.randomCharacterLayout
+        )
+
         binding.randomCharacterButton.setOnClickListener {
-            presenter.onRandomCharacterTapped()
+            visibleOnly(binding.randomCharacterProgressbar)
+            presenter.getRandomCharacter()
         }
         return binding.root
     }
 
-    override fun setRandomCharacterData(serialCharacter: SerialCharacter) {
+    override fun hideCharacter() {
+        binding.randomCharacterLayout.isVisible = false
+    }
+
+    override fun showCharacter(serialCharacter: SerialCharacter) {
         with(binding) {
             randomCharacterName.text = serialCharacter.name ?: EMPTY_FIELD_TEXT
             randomCharacterBirthday.text = serialCharacter.birthday ?: EMPTY_FIELD_TEXT
@@ -52,14 +62,7 @@ class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
                 imageLoader.load(LoadPhotoConfig(url), randomCharacterImage)
             }
         }
-    }
-
-    override fun hideCharacter() {
-        binding.randomCharacterLayout.isVisible = false
-    }
-
-    override fun showCharacter() {
-        binding.randomCharacterLayout.isVisible = true
+        visibleOnly(binding.randomCharacterLayout)
     }
 
     companion object {

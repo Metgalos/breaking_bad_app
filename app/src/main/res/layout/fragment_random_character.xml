@@ -16,6 +16,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.90" />
 
+    <TextView
+        android:id="@+id/random_character_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/random_character_placeholder"
+        android:visibility="visible"
+        android:textSize="@dimen/placeholder_text_size"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/random_character_progressbar"
+        android:layout_width="@dimen/progressbar_size"
+        android:layout_height="@dimen/progressbar_size"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/random_character_layout"
         android:layout_width="match_parent"
@@ -36,7 +60,7 @@
             style="@style/character_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/random_character_status_label"
+            android:text="@string/character_status_label"
             app:layout_constraintBottom_toTopOf="@+id/random_character_nickname_label"
             app:layout_constraintEnd_toEndOf="@+id/random_character_birthday_label"
             app:layout_constraintStart_toStartOf="@+id/random_character_birthday_label"
@@ -59,7 +83,7 @@
             style="@style/character_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/random_character_nickname_label"
+            android:text="@string/character_nickname_label"
             app:layout_constraintBottom_toTopOf="@+id/random_character_actor_label"
             app:layout_constraintEnd_toEndOf="@+id/random_character_status_label"
             app:layout_constraintStart_toStartOf="@+id/random_character_status_label"
@@ -81,7 +105,7 @@
             style="@style/character_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/random_character_actor_label"
+            android:text="@string/character_actor_label"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/random_character_nickname_label"
             app:layout_constraintStart_toStartOf="@+id/random_character_nickname_label"
@@ -116,7 +140,7 @@
             style="@style/character_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/random_character_birthday_label"
+            android:text="@string/character_birthday_label"
             app:layout_constraintBottom_toTopOf="@+id/random_character_status_label"
             app:layout_constraintEnd_toStartOf="@+id/random_character_birthday"
             app:layout_constraintHorizontal_bias="0.5"
