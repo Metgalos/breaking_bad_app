@@ -59,15 +59,13 @@
 
     <ImageButton
         android:id="@+id/search_quotes_button"
+        style="@style/search_button"
         android:layout_width="50dp"
         android:layout_height="40dp"
-        android:background="@color/transparent"
-        android:src="@android:drawable/ic_menu_search"
         app:layout_constraintBottom_toBottomOf="@+id/character_name_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/character_name_edit"
-        app:layout_constraintTop_toTopOf="@+id/character_name_edit"
-        android:tint="@color/black"/>
+        app:layout_constraintTop_toTopOf="@+id/character_name_edit" />
 
     <ProgressBar
         android:id="@+id/search_quotes_progressbar"
