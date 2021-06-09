@@ -48,7 +48,10 @@ class CharactersPresenter : MvpPresenter<CharactersFragmentView>() {
                 viewState.addCharacters(characters)
                 page ++
                 isLoading = false
-            }, { t: Throwable -> Timber.e(t) })
+            }, { t: Throwable ->
+                Timber.e(t)
+                isLoading = false
+            })
     }
 
     companion object {

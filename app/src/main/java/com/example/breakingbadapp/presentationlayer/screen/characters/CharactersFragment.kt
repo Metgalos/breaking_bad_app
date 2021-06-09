@@ -13,7 +13,6 @@ import com.example.breakingbadapp.datalayer.response.SerialCharacter
 import com.example.breakingbadapp.presentationlayer.base.BaseFragment
 import com.example.breakingbadapp.presentationlayer.screen.characters.adapter.CharactersAdapter
 import com.github.terrakok.cicerone.androidx.FragmentScreen
-import timber.log.Timber
 
 class CharactersFragment : BaseFragment(), CharactersFragmentView {
 
@@ -34,7 +33,7 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
     ): View? {
         binding = FragmentCharactersBinding.inflate(inflater, container, false)
 
-        with (binding.charactersList) {
+        with(binding.charactersList) {
             adapter = viewAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addOnScrollListener(presenter.getOnScrollListener())
@@ -44,10 +43,6 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
     }
 
     override fun addCharacters(characters: List<SerialCharacter>) {
-        if (characters.isEmpty()) {
-
-        }
-
         viewAdapter.addItems(characters)
     }
 
