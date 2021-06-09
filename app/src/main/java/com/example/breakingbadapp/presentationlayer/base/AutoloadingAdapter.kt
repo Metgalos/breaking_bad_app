@@ -16,11 +16,8 @@ abstract class AutoloadingAdapter<R, T : RecyclerView.ViewHolder> : RecyclerView
     fun getLastPosition(): Int = itemCount - 1
 
     fun addItems(data: List<R>) {
-        val lastIndex = itemCount - 1
-        val size = data.size
-
         this.data.addAll(data)
-        notifyItemRangeChanged(lastIndex, size)
+        notifyDataSetChanged()
     }
 
     fun deleteItem(item: R) {

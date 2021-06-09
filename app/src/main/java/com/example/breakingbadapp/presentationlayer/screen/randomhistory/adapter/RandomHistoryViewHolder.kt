@@ -12,7 +12,7 @@ import com.example.breakingbadapp.datalayer.model.LoadPhotoConfig
 import com.example.breakingbadapp.domainlayer.service.imageloader.ImageLoader
 import javax.inject.Inject
 
-class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val binding = CharacterResponseRowBinding.bind(itemView)
 
@@ -42,12 +42,42 @@ class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         }
     }
 
-    companion object {
-        fun create(parent: ViewGroup): RandomHistoryViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.character_response_row, parent, false)
-
-            return RandomHistoryViewHolder(view)
+    class MiddleItemHolder(itemView: View) : RandomHistoryViewHolder(itemView) {
+        companion object {
+            fun create(parent: ViewGroup): MiddleItemHolder {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.character_response_row, parent, false)
+                return MiddleItemHolder(view)
+            }
         }
+    }
+
+    class FirstItemHolder(itemView: View) : RandomHistoryViewHolder(itemView) {
+        companion object {
+            fun create(parent: ViewGroup): MiddleItemHolder {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.character_response_row_first, parent, false)
+                return MiddleItemHolder(view)
+            }
+        }
+    }
+
+    class LastItemHolder(itemView: View) : RandomHistoryViewHolder(itemView) {
+        companion object {
+            fun create(parent: ViewGroup): MiddleItemHolder {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.character_response_last, parent, false)
+                return MiddleItemHolder(view)
+            }
+        }
+    }
+
+    companion object {
+        fun create(parent: ViewGroup, viewType: Int): RandomHistoryViewHolder =
+            when (RandomHistoryHolderType.getType(viewType)) {
+                RandomHistoryHolderType.FIRST -> FirstItemHolder.create(parent)
+                RandomHistoryHolderType.LAST -> LastItemHolder.create(parent)
+                RandomHistoryHolderType.MIDDLE -> MiddleItemHolder.create(parent)
+            }
     }
 }
