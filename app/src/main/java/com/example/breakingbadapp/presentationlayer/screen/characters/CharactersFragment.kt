@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.breakingbadapp.databinding.FragmentCharactersBinding
 import com.example.breakingbadapp.datalayer.response.SerialCharacter
 import com.example.breakingbadapp.presentationlayer.base.BaseFragment
-import com.example.breakingbadapp.presentationlayer.screen.character.CharacterFragment
-import com.example.breakingbadapp.presentationlayer.screen.characters.adapter.CharactersScreenSlideAdapter
-import com.example.breakingbadapp.presentationlayer.screen.characters.adapter.CharactersScreenSlideAdapterListener
+import com.example.breakingbadapp.presentationlayer.screen.characters.adapter.CharactersAdapter
 import com.github.terrakok.cicerone.androidx.FragmentScreen
+import timber.log.Timber
 
 class CharactersFragment : BaseFragment(), CharactersFragmentView {
 
@@ -22,13 +22,8 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
     @InjectPresenter
     lateinit var presenter: CharactersPresenter
 
-    private val adapter: CharactersScreenSlideAdapter by lazy {
-        val listener = object : CharactersScreenSlideAdapterListener {
-            override fun onLoading() {
-                presenter.getCharacters()
-            }
-        }
-        CharactersScreenSlideAdapter(this, listener)
+    private val viewAdapter by lazy {
+        CharactersAdapter()
     }
 
     @SuppressLint("WrongConstant")
@@ -38,16 +33,22 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCharactersBinding.inflate(inflater, container, false)
-        binding.charactersPager.adapter = adapter
-        binding.charactersPager.offscreenPageLimit = OFFSCREEN_PAGE_LIMIT
+
+        with (binding.charactersList) {
+            adapter = viewAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            addOnScrollListener(presenter.getOnScrollListener())
+        }
+
         return binding.root
     }
 
-    override fun addCharacters(characters: List<CharacterFragment>) {
-        characters.let {
-            adapter.addItems(it)
-            if (it.isEmpty()) adapter.onLoadingEnd()
+    override fun addCharacters(characters: List<SerialCharacter>) {
+        if (characters.isEmpty()) {
+
         }
+
+        viewAdapter.addItems(characters)
     }
 
     override fun hideProgressBar() {
@@ -55,8 +56,6 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
     }
 
     companion object {
-        private const val OFFSCREEN_PAGE_LIMIT = 3
-
         fun getScreen() = FragmentScreen { CharactersFragment() }
     }
 }

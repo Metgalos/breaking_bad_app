@@ -37,6 +37,7 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
                 val adapter = recyclerView.adapter as RandomHistoryAdapter
                 val lastPosition = adapter.getLastPosition()
 
+                Timber.i("Last visible = $lastVisible and last position = $lastPosition")
                 if (lastVisible != lastPosition) return
 
                 getHistoryItems(nextPage) { recyclerView.removeOnScrollListener(this) }
