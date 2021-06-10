@@ -22,8 +22,10 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
     private lateinit var binding: FragmentRandomHistoryBinding
 
     private val viewAdapter by lazy {
-        RandomHistoryAdapter().also { it.setListener(getAdapterListener()) }
+        RandomHistoryAdapter().also { it.setListener(presenter.getAdapterListener()) }
     }
+
+    private val characters: MutableList<CharacterResponse> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,17 +42,8 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
         return binding.root
     }
 
-    override fun addItems(characters: List<CharacterResponse>) {
-        viewAdapter.addItems(characters)
-    }
-
-    private fun getAdapterListener(): RandomHistoryViewHolderListener {
-        return object : RandomHistoryViewHolderListener {
-            override fun onDeleteItem(character: CharacterResponse) {
-                presenter.remove(character)
-                viewAdapter.deleteItem(character)
-            }
-        }
+    override fun displayCharacters(characters: List<CharacterResponse>) {
+        viewAdapter.submitList(characters)
     }
 
     companion object {
