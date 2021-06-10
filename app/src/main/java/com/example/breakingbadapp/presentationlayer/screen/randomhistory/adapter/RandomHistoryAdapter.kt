@@ -3,7 +3,6 @@ package com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapte
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import timber.log.Timber
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse as Character
 
 
@@ -41,11 +40,10 @@ class RandomHistoryAdapter : ListAdapter<Character, RandomHistoryViewHolder>(Cal
 
     class Callback : DiffUtil.ItemCallback<Character>() {
         override fun areItemsTheSame(old: Character, new: Character): Boolean {
-            Timber.i("id ${old.id} and id ${new.id} is ${old.id == new.id}")
             return old.id == new.id
         }
+
         override fun areContentsTheSame(old: Character, new: Character): Boolean {
-            Timber.i("obj ${old.id} and obj ${new.id} is ${old == new}")
             return (old == new)
         }
     }

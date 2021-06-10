@@ -55,9 +55,7 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Timber.i(" From ${characters.size.toString()}")
                 characters.remove(character)
-                Timber.i("To ${characters.size.toString()}")
                 viewState.displayCharacters(characters.toList())
             }, { throwable: Throwable -> Timber.e(throwable) })
     }
