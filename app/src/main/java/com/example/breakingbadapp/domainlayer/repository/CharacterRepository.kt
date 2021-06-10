@@ -30,6 +30,5 @@ class CharacterRepository @Inject constructor(
         val offset = (page - 1) * pageSize
         return api.getCharacters(pageSize, offset)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
     }
 }
