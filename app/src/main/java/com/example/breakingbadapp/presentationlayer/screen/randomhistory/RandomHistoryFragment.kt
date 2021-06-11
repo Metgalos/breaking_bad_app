@@ -11,7 +11,6 @@ import com.example.breakingbadapp.databinding.FragmentRandomHistoryBinding
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.presentationlayer.base.BaseFragment
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryAdapter
-import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryViewHolderListener
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
@@ -43,7 +42,7 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
     }
 
     override fun displayCharacters(characters: List<CharacterResponse>) {
-        viewAdapter.submitList(characters)
+        viewAdapter.setData(characters)
     }
 
     companion object {

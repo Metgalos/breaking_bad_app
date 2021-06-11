@@ -71,9 +71,9 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
                 } else {
                     ++nextPage
                 }
-                isLoading = false
                 this.characters.addAll(characters)
                 viewState.displayCharacters(this.characters.toList())
+                isLoading = false
             }, { throwable: Throwable ->
                 Timber.e(throwable)
                 isLoading = false

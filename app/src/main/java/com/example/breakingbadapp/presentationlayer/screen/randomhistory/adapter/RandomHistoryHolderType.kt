@@ -1,7 +1,7 @@
 package com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter
 
 enum class RandomHistoryHolderType {
-    FIRST, MIDDLE, LAST;
+    FIRST, MIDDLE, LAST, HEADER;
 
     companion object {
         fun getIntValue(type: RandomHistoryHolderType): Int = type.ordinal
