@@ -24,8 +24,6 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
         RandomHistoryAdapter().also { it.setListener(presenter.getAdapterListener()) }
     }
 
-    private val characters: MutableList<CharacterResponse> = mutableListOf()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
