@@ -25,4 +25,10 @@
     <string name="next_character_button">Следующий</string>
     <string name="characters">Персонажи</string>
     <string name="random_character_placeholder">Начните поиск, чтобы получить информацию о случайном персонаже.</string>
+    <string name="clear_history">Очистить историю</string>
+    <string name="empty_history_text">История запросов пуста. Для отображения истории необходимо сделать запрос во вкладке \"Случайный персонаж\"</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="cancel">Отмена</string>
+    <string name="default_confirmation_message">Вы уверены?</string>
+    <string name="clear_history_confirmation">Вы точно хотите очистить историю запросов?</string>
 </resources>

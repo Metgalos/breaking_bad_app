@@ -18,6 +18,9 @@ interface CharacterResponseDao {
     @Delete
     fun remove(character: CharacterResponse)
 
+    @Query("DELETE FROM $TABLE_NAME")
+    fun clear()
+
     companion object {
         private const val TABLE_NAME = "character_responses"
     }
