@@ -17,12 +17,14 @@ class CharacterResponseRepository @Inject constructor(
     }
 
     fun insert(characterResponse: CharacterResponse): Completable =
-        Completable.create {
+        Completable.create { subscriber ->
             dao.insert(characterResponse)
+            subscriber.onComplete()
         }
 
     fun remove(characterResponse: CharacterResponse): Completable =
-        Completable.create {
+        Completable.create { subscriber ->
             dao.remove(characterResponse)
+            subscriber.onComplete()
         }
 }

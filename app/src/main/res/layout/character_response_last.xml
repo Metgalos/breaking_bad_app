@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/small_margin"
-        android:background="@drawable/list_item">
+        android:background="@drawable/list_item_bottom_corners">
 
         <TextView
             android:id="@+id/name_label"

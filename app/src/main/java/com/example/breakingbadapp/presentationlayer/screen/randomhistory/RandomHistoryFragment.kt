@@ -11,7 +11,6 @@ import com.example.breakingbadapp.databinding.FragmentRandomHistoryBinding
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.presentationlayer.base.BaseFragment
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryAdapter
-import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryViewHolderListener
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
@@ -22,7 +21,7 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
     private lateinit var binding: FragmentRandomHistoryBinding
 
     private val viewAdapter by lazy {
-        RandomHistoryAdapter().also { it.setListener(getAdapterListener()) }
+        RandomHistoryAdapter().also { it.setListener(presenter.getAdapterListener()) }
     }
 
     override fun onCreateView(
@@ -40,17 +39,8 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
         return binding.root
     }
 
-    override fun addItems(characters: List<CharacterResponse>) {
-        viewAdapter.addItems(characters)
-    }
-
-    private fun getAdapterListener(): RandomHistoryViewHolderListener {
-        return object : RandomHistoryViewHolderListener {
-            override fun onDeleteItem(character: CharacterResponse) {
-                presenter.remove(character)
-                viewAdapter.deleteItem(character)
-            }
-        }
+    override fun displayCharacters(characters: List<CharacterResponse>) {
+        viewAdapter.setData(characters)
     }
 
     companion object {

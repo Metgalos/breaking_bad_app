@@ -8,6 +8,7 @@ import com.example.breakingbadapp.App
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.domainlayer.database.repository.CharacterResponseRepository
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryAdapter
+import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryViewHolderListener
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -21,6 +22,9 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
     lateinit var repository: CharacterResponseRepository
 
     private var nextPage: Int = INITIAL_PAGE
+    private var isLoading = false
+
+    private val characters: MutableList<CharacterResponse> = mutableListOf()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -35,23 +39,30 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
                     (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
                 val adapter = recyclerView.adapter as RandomHistoryAdapter
-                val lastPosition = adapter.getLastPosition()
-
-                Timber.i("Last visible = $lastVisible and last position = $lastPosition")
-                if (lastVisible != lastPosition) return
-
+                if (lastVisible != adapter.itemCount.minus(1) && !isLoading) return
                 getHistoryItems(nextPage) { recyclerView.removeOnScrollListener(this) }
             }
         }
 
-    fun remove(character: CharacterResponse) {
-        repository.remove(character)
-            .subscribeOn(Schedulers.io())
-            .subscribe({}, { throwable: Throwable -> Timber.e(throwable) })
+    fun getAdapterListener(): RandomHistoryViewHolderListener {
+        return object : RandomHistoryViewHolderListener {
+            override fun onDeleteItem(character: CharacterResponse) = remove(character)
+        }
     }
 
-    private fun getHistoryItems(page: Int, onLastPage: () -> Unit = {}): Disposable =
-        repository.getPaged(page, PAGE_SIZE)
+    private fun remove(character: CharacterResponse) {
+        repository.remove(character)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                characters.remove(character)
+                viewState.displayCharacters(characters.toList())
+            }, { throwable: Throwable -> Timber.e(throwable) })
+    }
+
+    private fun getHistoryItems(page: Int, onLastPage: () -> Unit = {}): Disposable {
+        isLoading = true
+        return repository.getPaged(page, PAGE_SIZE)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ characters ->
@@ -60,10 +71,14 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
                 } else {
                     ++nextPage
                 }
-                viewState.addItems(characters)
+                this.characters.addAll(characters)
+                viewState.displayCharacters(this.characters.toList())
+                isLoading = false
             }, { throwable: Throwable ->
                 Timber.e(throwable)
+                isLoading = false
             })
+    }
 
     companion object {
         private const val PAGE_SIZE = 2

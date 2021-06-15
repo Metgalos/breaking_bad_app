@@ -12,3 +12,14 @@ fun SerialCharacter.toCharacterResponse(): CharacterResponse =
             name, birthday, status, nickname, actor, picture, datetime
         )
     }
+
+fun String.fromDbFormatToHeader(): String {
+    return try {
+        val formatter = SimpleDateFormat("dd.MM.yyyy", Locale.US)
+        val parser = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US)
+        val header = parser.parse(this)?.let { formatter.format(it) }
+        header ?: this
+    } catch (e: Throwable) {
+        this
+    }
+}
