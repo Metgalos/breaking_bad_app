@@ -64,6 +64,7 @@ class RandomHistoryAdapter : ListAdapter<RandomHistoryViewHolder.Model, RandomHi
         return when {
             item is RandomHistoryViewHolder.Model.Footer -> RandomHistoryHolderType.FOOTER
             item is RandomHistoryViewHolder.Model.Header -> RandomHistoryHolderType.HEADER
+            !equalsWithPrevious(position) && !equalsWithNext(position) -> RandomHistoryHolderType.SINGLE
             !equalsWithPrevious(position) -> RandomHistoryHolderType.FIRST
             !equalsWithNext(position) -> RandomHistoryHolderType.LAST
             else -> RandomHistoryHolderType.MIDDLE

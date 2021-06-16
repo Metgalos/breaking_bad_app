@@ -74,6 +74,16 @@ sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(i
                 }
             }
         }
+
+        class SingleItemHolder(itemView: View) : ItemHolder(itemView) {
+            companion object {
+                fun create(parent: ViewGroup): SingleItemHolder {
+                    val view = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.character_response_row_single, parent, false)
+                    return SingleItemHolder(view)
+                }
+            }
+        }
     }
 
     class HeaderItemHolder(itemView: View) : RandomHistoryViewHolder(itemView) {
@@ -127,6 +137,7 @@ sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(i
                 RandomHistoryHolderType.MIDDLE -> ItemHolder.MiddleItemHolder.create(parent)
                 RandomHistoryHolderType.HEADER -> HeaderItemHolder.create(parent)
                 RandomHistoryHolderType.FOOTER -> FooterHolder.create(parent)
+                RandomHistoryHolderType.SINGLE -> ItemHolder.SingleItemHolder.create(parent)
             }
     }
 }

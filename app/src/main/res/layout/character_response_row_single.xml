@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:background="@color/red">
+
+        <ImageView
+            android:id="@+id/remove_icon"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/history_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/small_margin"
+        android:background="@drawable/list_item_all_corners">
+
+        <TextView
+            android:id="@+id/name_label"
+            style="@style/character_response_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/character_name"
+            style="@style/character_response_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@+id/name_label"
+            app:layout_constraintStart_toEndOf="@+id/name_label"
+            tools:text="Константин Константинопольский" />
+
+        <TextView
+            android:id="@+id/status_label"
+            style="@style/character_response_row"
+            android:layout_width="52dp"
+            android:layout_height="18dp"
+            android:text="@string/character_status_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_label" />
+
+        <TextView
+            android:id="@+id/character_status"
+            style="@style/character_response_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/status_label"
+            app:layout_constraintTop_toBottomOf="@+id/character_name"
+            tools:text="Живой" />
+
+        <TextView
+            android:id="@+id/nickname_label"
+            style="@style/character_response_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/character_nickname_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/status_label" />
+
+        <TextView
+            android:id="@+id/character_nickname"
+            style="@style/character_response_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/nickname_label"
+            app:layout_constraintTop_toBottomOf="@+id/character_status"
+            tools:text="@string/random_character_nickname" />
+
+        <TextView
+            android:id="@+id/actor_label"
+            style="@style/character_response_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/character_actor_label"
+            android:textAlignment="textStart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nickname_label" />
+
+        <TextView
+            android:id="@+id/character_actor"
+            style="@style/character_response_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/actor_label"
+            app:layout_constraintTop_toBottomOf="@+id/character_nickname"
+            tools:text="@string/random_character_actor" />
+
+        <TextView
+            android:id="@+id/response_datetime"
+            style="@style/character_response_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/name_label"
+            app:layout_constraintTop_toBottomOf="@+id/character_actor"
+            tools:text="20.03.2020 18:15" />
+
+        <ImageView
+            android:id="@+id/character_picture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/avatar_placeholder" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.daimajia.swipe.SwipeLayout>
