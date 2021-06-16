@@ -9,17 +9,20 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
-class CharacterDetailPresenter : MvpPresenter<CharacterDetailView>() {
+class CharacterDetailPresenter(
+    private val responseId: Int
+) : MvpPresenter<CharacterDetailView>() {
 
     @Inject
     lateinit var repository: CharacterResponseRepository
 
     init {
         App.appComponent.inject(this)
+        getCharacterResponse()
     }
 
-    fun getCharacterResponse(id: Int) {
-        repository.getById(id)
+    private fun getCharacterResponse() {
+        repository.getById(responseId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ character ->
                 viewState.displayCharacter(character)

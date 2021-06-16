@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.breakingbadapp.App
 import com.example.breakingbadapp.databinding.FragmentCharacterDetailBinding
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
@@ -24,15 +25,20 @@ class CharacterDetailFragment : BaseFragment(), CharacterDetailView {
 
     private lateinit var binding: FragmentCharacterDetailBinding
 
+    @ProvidePresenter
+    fun provideCharacterDetailPresenter(): CharacterDetailPresenter? {
+        return arguments?.getInt(CHARACTER_RESPONSE_ID_ARG_KEY)?.let {
+            CharacterDetailPresenter(it)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         App.appComponent.inject(this)
         binding = FragmentCharacterDetailBinding.inflate(inflater, container, false)
-        val characterResponseId = arguments?.getInt(CHARACTER_RESPONSE_ID_ARG_KEY)
-        characterResponseId?.let { presenter.getCharacterResponse(it) }
         return binding.root
     }
 
