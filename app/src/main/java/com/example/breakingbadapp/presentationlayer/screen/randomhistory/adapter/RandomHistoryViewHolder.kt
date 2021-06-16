@@ -8,6 +8,7 @@ import com.example.breakingbadapp.App
 import com.example.breakingbadapp.R
 import com.example.breakingbadapp.databinding.CharacterResponseRowBinding
 import com.example.breakingbadapp.databinding.HistoryHeaderItemBinding
+import com.example.breakingbadapp.databinding.ResponseHistoryFooterBinding
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.datalayer.model.LoadPhotoConfig
 import com.example.breakingbadapp.domainlayer.service.imageloader.ImageLoader
@@ -26,7 +27,7 @@ sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(i
         private val binding = CharacterResponseRowBinding.bind(itemView)
 
         fun bind(character: CharacterResponse, listener: RandomHistoryViewHolderListener?) {
-            with (binding) {
+            with (binding.rowLayout) {
                 characterName.text = character.name
                 characterStatus.text = character.status
                 characterNickname.text = character.nickname
@@ -37,10 +38,9 @@ sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(i
                     val config = LoadPhotoConfig(url = it, placeholder = R.drawable.avatar_placeholder)
                     imageLoader.load(config, characterPicture)
                 }
-
-                removeIcon.setOnClickListener {
-                    listener?.onDeleteItem(character)
-                }
+            }
+            binding.actionBar.removeIcon.setOnClickListener {
+                listener?.onDeleteItem(character)
             }
         }
 
@@ -73,6 +73,16 @@ sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(i
                 }
             }
         }
+
+        class SingleItemHolder(itemView: View) : ItemHolder(itemView) {
+            companion object {
+                fun create(parent: ViewGroup): SingleItemHolder {
+                    val view = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.character_response_row_single, parent, false)
+                    return SingleItemHolder(view)
+                }
+            }
+        }
     }
 
     class HeaderItemHolder(itemView: View) : RandomHistoryViewHolder(itemView) {
@@ -92,9 +102,30 @@ sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(i
         }
     }
 
+    class FooterHolder(itemView: View) : RandomHistoryViewHolder(itemView) {
+        private val binding = ResponseHistoryFooterBinding.bind(itemView)
+
+        fun bind(listener: HolderListener?) {
+            binding.clearHistoryButton.setOnClickListener { listener?.onClearHistory() }
+        }
+
+        interface HolderListener {
+            fun onClearHistory()
+        }
+
+        companion object {
+            fun create(parent: ViewGroup): FooterHolder {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.response_history_footer, parent, false)
+                return FooterHolder(view)
+            }
+        }
+    }
+
     sealed class Model {
         data class Header(val header: String) : Model()
         data class Item(val response: CharacterResponse) : Model()
+        data class Footer(val type: String = "footer") : Model()
     }
 
     companion object {
@@ -104,6 +135,8 @@ sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(i
                 RandomHistoryHolderType.LAST -> ItemHolder.LastItemHolder.create(parent)
                 RandomHistoryHolderType.MIDDLE -> ItemHolder.MiddleItemHolder.create(parent)
                 RandomHistoryHolderType.HEADER -> HeaderItemHolder.create(parent)
+                RandomHistoryHolderType.FOOTER -> FooterHolder.create(parent)
+                RandomHistoryHolderType.SINGLE -> ItemHolder.SingleItemHolder.create(parent)
             }
     }
 }

@@ -2,6 +2,6 @@ package com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapte
 
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 
-interface RandomHistoryViewHolderListener {
+interface RandomHistoryViewHolderListener : RandomHistoryViewHolder.FooterHolder.HolderListener {
     fun onDeleteItem(character: CharacterResponse)
 }

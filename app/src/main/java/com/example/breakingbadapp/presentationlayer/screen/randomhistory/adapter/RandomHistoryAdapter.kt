@@ -24,6 +24,7 @@ class RandomHistoryAdapter : ListAdapter<RandomHistoryViewHolder.Model, RandomHi
                 val item = getItem(position) as RandomHistoryViewHolder.Model.Item
                 holder.bind(item.response, listener)
             }
+            is RandomHistoryViewHolder.FooterHolder -> holder.bind(listener)
         }
     }
 
@@ -35,6 +36,7 @@ class RandomHistoryAdapter : ListAdapter<RandomHistoryViewHolder.Model, RandomHi
     fun setData(list: List<Character>?) {
         val data = mutableListOf<RandomHistoryViewHolder.Model>()
         list?.let {
+            if (it.isEmpty()) return@let false
             var prev = it.first().datetime?.fromDbFormatToHeader()
             prev?.let { date -> data.add(RandomHistoryViewHolder.Model.Header(date)) }
 
@@ -48,6 +50,7 @@ class RandomHistoryAdapter : ListAdapter<RandomHistoryViewHolder.Model, RandomHi
                 }
                 data.add(RandomHistoryViewHolder.Model.Item(character))
             }
+            data.add(RandomHistoryViewHolder.Model.Footer())
         }
         super.submitList(data)
     }
@@ -58,10 +61,10 @@ class RandomHistoryAdapter : ListAdapter<RandomHistoryViewHolder.Model, RandomHi
 
     private fun getViewHolderType(position: Int): RandomHistoryHolderType {
         val item = getItem(position)
-        if (item is RandomHistoryViewHolder.Model.Header) {
-            return RandomHistoryHolderType.HEADER
-        }
         return when {
+            item is RandomHistoryViewHolder.Model.Footer -> RandomHistoryHolderType.FOOTER
+            item is RandomHistoryViewHolder.Model.Header -> RandomHistoryHolderType.HEADER
+            !equalsWithPrevious(position) && !equalsWithNext(position) -> RandomHistoryHolderType.SINGLE
             !equalsWithPrevious(position) -> RandomHistoryHolderType.FIRST
             !equalsWithNext(position) -> RandomHistoryHolderType.LAST
             else -> RandomHistoryHolderType.MIDDLE

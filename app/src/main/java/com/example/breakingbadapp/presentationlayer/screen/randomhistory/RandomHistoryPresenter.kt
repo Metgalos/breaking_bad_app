@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.breakingbadapp.App
+import com.example.breakingbadapp.R
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
+import com.example.breakingbadapp.datalayer.model.ConfirmationDialogOptions
 import com.example.breakingbadapp.domainlayer.database.repository.CharacterResponseRepository
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryAdapter
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryViewHolderListener
@@ -47,8 +49,24 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
     fun getAdapterListener(): RandomHistoryViewHolderListener {
         return object : RandomHistoryViewHolderListener {
             override fun onDeleteItem(character: CharacterResponse) = remove(character)
+            override fun onClearHistory() {
+                val options = ConfirmationDialogOptions(R.string.clear_history_confirmation)
+                viewState.displayConfirmation(options)
+            }
         }
     }
+
+    fun clearHistory() {
+        viewState.hideConfirmation()
+        repository.clear()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                characters.clear()
+                viewState.displayCharacters(characters)
+            }, { throwable: Throwable? -> Timber.e(throwable) })
+    }
+
+    fun hideConfirmation() = viewState.hideConfirmation()
 
     private fun remove(character: CharacterResponse) {
         repository.remove(character)
@@ -56,7 +74,7 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 characters.remove(character)
-                viewState.displayCharacters(characters.toList())
+                viewState.displayCharacters(characters)
             }, { throwable: Throwable -> Timber.e(throwable) })
     }
 
@@ -66,13 +84,10 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ characters ->
-                if (characters.size < PAGE_SIZE) {
-                    onLastPage()
-                } else {
-                    ++nextPage
-                }
+                if (characters.size < PAGE_SIZE) onLastPage()
+                nextPage++
                 this.characters.addAll(characters)
-                viewState.displayCharacters(this.characters.toList())
+                viewState.displayCharacters(this.characters)
                 isLoading = false
             }, { throwable: Throwable ->
                 Timber.e(throwable)
