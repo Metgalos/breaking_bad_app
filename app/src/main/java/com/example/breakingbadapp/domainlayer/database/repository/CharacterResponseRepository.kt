@@ -17,6 +17,10 @@ class CharacterResponseRepository @Inject constructor(
         }
     }
 
+    fun getById(id: Int): Single<CharacterResponse> =
+        dao.getById(id)
+            .subscribeOn(Schedulers.io())
+
     fun insert(characterResponse: CharacterResponse): Completable =
         Completable.create { subscriber ->
             dao.insert(characterResponse)
