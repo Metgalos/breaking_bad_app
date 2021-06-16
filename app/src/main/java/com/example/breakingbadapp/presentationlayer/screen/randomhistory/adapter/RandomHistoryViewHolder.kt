@@ -27,7 +27,7 @@ sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(i
         private val binding = CharacterResponseRowBinding.bind(itemView)
 
         fun bind(character: CharacterResponse, listener: RandomHistoryViewHolderListener?) {
-            with (binding) {
+            with (binding.rowLayout) {
                 characterName.text = character.name
                 characterStatus.text = character.status
                 characterNickname.text = character.nickname
@@ -38,10 +38,9 @@ sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(i
                     val config = LoadPhotoConfig(url = it, placeholder = R.drawable.avatar_placeholder)
                     imageLoader.load(config, characterPicture)
                 }
-
-                removeIcon.setOnClickListener {
-                    listener?.onDeleteItem(character)
-                }
+            }
+            binding.actionBar.removeIcon.setOnClickListener {
+                listener?.onDeleteItem(character)
             }
         }
 
