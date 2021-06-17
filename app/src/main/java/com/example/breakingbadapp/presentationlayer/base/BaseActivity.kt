@@ -1,12 +1,11 @@
 package com.example.breakingbadapp.presentationlayer.base
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.example.breakingbadapp.App
+import com.example.breakingbadapp.presentationlayer.routing.AnimationNavigator
 import com.github.terrakok.cicerone.Navigator
 import com.github.terrakok.cicerone.NavigatorHolder
-import com.github.terrakok.cicerone.androidx.AppNavigator
 import javax.inject.Inject
 
 abstract class BaseActivity : MvpAppCompatActivity() {
@@ -23,7 +22,7 @@ abstract class BaseActivity : MvpAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getFragmentContainerId()?.let { fragmentContainerId ->
-            navigator = AppNavigator(this, fragmentContainerId)
+            navigator = AnimationNavigator(this, fragmentContainerId)
         }
     }
 
