@@ -24,7 +24,7 @@ class AnimationNavigator(
             fragmentTransaction.setCustomAnimations(
                 androidx.appcompat.R.anim.abc_slide_in_top,
                 androidx.appcompat.R.anim.abc_popup_exit,
-                androidx.appcompat.R.anim.abc_slide_in_top,
+                androidx.appcompat.R.anim.abc_slide_in_bottom,
                 androidx.appcompat.R.anim.abc_popup_exit,
             )
         }
