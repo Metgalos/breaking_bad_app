@@ -18,14 +18,20 @@ class AnimationNavigator(
         currentFragment: Fragment?,
         nextFragment: Fragment
     ) {
-        super.setupFragmentTransaction(
-            screen,
+        val transaction = if (currentFragment != null && currentFragment::class == nextFragment::class) {
+            fragmentTransaction
+        } else {
             fragmentTransaction.setCustomAnimations(
                 androidx.appcompat.R.anim.abc_slide_in_top,
                 androidx.appcompat.R.anim.abc_popup_exit,
                 androidx.appcompat.R.anim.abc_slide_in_top,
                 androidx.appcompat.R.anim.abc_popup_exit,
-            ),
+            )
+        }
+
+        super.setupFragmentTransaction(
+            screen,
+            transaction,
             currentFragment,
             nextFragment)
     }
