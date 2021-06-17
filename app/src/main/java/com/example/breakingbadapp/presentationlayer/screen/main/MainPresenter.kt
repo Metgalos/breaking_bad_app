@@ -16,8 +16,6 @@ class MainPresenter : MvpPresenter<MainView>() {
 
     @Inject lateinit var router: Router
 
-    private var currentMenuItem: Int? = null
-
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         App.appComponent.inject(this)
@@ -25,22 +23,21 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun onBottomNavigationItemSelected(itemId: Int): Boolean {
-        if (itemId == currentMenuItem) return false
         when (itemId) {
-            R.id.random_character -> navigateToRandomCharacterFragment().also {
-                currentMenuItem = R.id.random_character
+            R.id.random_character -> {
+                navigateToRandomCharacterFragment()
                 return true
             }
-            R.id.search_quote -> navigateToSearchCharacterFragment().also {
-                currentMenuItem = R.id.search_quote
+            R.id.search_quote -> {
+                navigateToSearchCharacterFragment()
                 return true
             }
-            R.id.random_character_history -> navigateToRandomCharacterHistoryFragment().also {
-                currentMenuItem = R.id.random_character_history
+            R.id.random_character_history -> {
+                navigateToRandomCharacterHistoryFragment()
                 return true
             }
-            R.id.characters -> navigateToCharacters().also {
-                currentMenuItem = R.id.characters
+            R.id.characters -> {
+                navigateToCharacters()
                 return true
             }
             else -> return false

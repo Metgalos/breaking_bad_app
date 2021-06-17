@@ -9,8 +9,10 @@ import com.example.breakingbadapp.R
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.datalayer.model.ConfirmationDialogOptions
 import com.example.breakingbadapp.domainlayer.database.repository.CharacterResponseRepository
+import com.example.breakingbadapp.presentationlayer.screen.character_detail.CharacterDetailFragment
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryAdapter
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryViewHolderListener
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -25,6 +27,9 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
 
     private var nextPage: Int = INITIAL_PAGE
     private var isLoading = false
+
+    @Inject
+    lateinit var router: Router
 
     private val characters: MutableList<CharacterResponse> = mutableListOf()
 
@@ -49,6 +54,11 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
     fun getAdapterListener(): RandomHistoryViewHolderListener {
         return object : RandomHistoryViewHolderListener {
             override fun onDeleteItem(character: CharacterResponse) = remove(character)
+
+            override fun onCharacterSelected(id: Int) {
+                navigateToDetailScreen(id)
+            }
+
             override fun onClearHistory() {
                 val options = ConfirmationDialogOptions(R.string.clear_history_confirmation)
                 viewState.displayConfirmation(options)
@@ -93,6 +103,10 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
                 Timber.e(throwable)
                 isLoading = false
             })
+    }
+
+    private fun navigateToDetailScreen(id: Int) {
+        router.navigateTo(CharacterDetailFragment.getScreen(id))
     }
 
     companion object {

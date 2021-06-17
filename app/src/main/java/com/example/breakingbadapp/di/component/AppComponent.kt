@@ -1,6 +1,8 @@
 package com.example.breakingbadapp.di.component
 
 import com.example.breakingbadapp.di.module.*
+import com.example.breakingbadapp.presentationlayer.screen.character_detail.CharacterDetailFragment
+import com.example.breakingbadapp.presentationlayer.screen.character_detail.CharacterDetailPresenter
 import com.example.breakingbadapp.presentationlayer.screen.characters.CharactersPresenter
 import com.example.breakingbadapp.presentationlayer.screen.characters.adapter.CharactersHolder
 import com.example.breakingbadapp.presentationlayer.screen.main.MainActivity
@@ -32,4 +34,6 @@ interface AppComponent {
     fun inject(randomHistoryViewHolder: RandomHistoryViewHolder)
     fun inject(charactersHolder: CharactersHolder)
     fun inject(charactersPresenter: CharactersPresenter)
+    fun inject(characterDetailPresenter: CharacterDetailPresenter)
+    fun inject(characterDetailFragment: CharacterDetailFragment)
 }

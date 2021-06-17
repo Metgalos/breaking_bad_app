@@ -38,6 +38,10 @@ sealed class RandomHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(i
                     val config = LoadPhotoConfig(url = it, placeholder = R.drawable.avatar_placeholder)
                     imageLoader.load(config, characterPicture)
                 }
+
+                binding.rowLayout.characterResponseRowLayout.setOnClickListener {
+                    listener?.onCharacterSelected(character.id)
+                }
             }
             binding.actionBar.removeIcon.setOnClickListener {
                 listener?.onDeleteItem(character)

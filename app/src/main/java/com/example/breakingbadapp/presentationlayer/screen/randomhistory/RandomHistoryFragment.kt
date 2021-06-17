@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.example.breakingbadapp.R
 import com.example.breakingbadapp.databinding.FragmentRandomHistoryBinding
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.datalayer.model.ConfirmationDialogOptions
@@ -15,12 +16,13 @@ import com.example.breakingbadapp.presentationlayer.dialog.ConfirmationDialogFra
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryAdapter
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
-class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
+class RandomHistoryFragment : BaseFragment<FragmentRandomHistoryBinding>(), RandomHistoryView {
 
     @InjectPresenter
     lateinit var presenter: RandomHistoryPresenter
 
-    private lateinit var binding: FragmentRandomHistoryBinding
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentRandomHistoryBinding
+        get() = FragmentRandomHistoryBinding::inflate
 
     private val viewAdapter by lazy {
         RandomHistoryAdapter().also { it.setListener(presenter.getAdapterListener()) }
@@ -28,23 +30,27 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
 
     private var confirmationDialog: ConfirmationDialogFragment? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentRandomHistoryBinding.inflate(inflater, container, false)
+    override fun getToolbarContainer(): Int = R.id.toolbar_container
+
+    override fun getToolbarId(): Int = R.id.toolbar
+
+    override fun getToolbarLayout(): Int = R.layout.base_toolbar
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
+        setTitle(R.string.history_toolbar_title)
+
         visibleViews = listOf(
             binding.characterResponseRecycleView,
             binding.emptyHistoryText
         )
+
         binding.characterResponseRecycleView.apply {
             this.adapter = viewAdapter
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             addOnScrollListener(presenter.getOnScrollListener())
         }
-
-        return binding.root
     }
 
     override fun displayCharacters(characters: List<CharacterResponse>) {

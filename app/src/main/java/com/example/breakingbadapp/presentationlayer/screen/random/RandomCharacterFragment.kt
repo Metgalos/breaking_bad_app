@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.breakingbadapp.App
+import com.example.breakingbadapp.R
 import com.example.breakingbadapp.databinding.FragmentRandomCharacterBinding
 import com.example.breakingbadapp.datalayer.model.LoadPhotoConfig
 import com.example.breakingbadapp.datalayer.response.SerialCharacter
@@ -15,7 +16,7 @@ import com.example.breakingbadapp.presentationlayer.base.BaseFragment
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import javax.inject.Inject
 
-class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
+class RandomCharacterFragment : BaseFragment<FragmentRandomCharacterBinding>(), RandomCharacterView {
 
     @InjectPresenter
     lateinit var presenter: RandomCharacterPresenter
@@ -23,15 +24,19 @@ class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    private lateinit var binding: FragmentRandomCharacterBinding
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentRandomCharacterBinding
+        get() = FragmentRandomCharacterBinding::inflate
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun getToolbarContainer(): Int = R.id.toolbar_container
+
+    override fun getToolbarId(): Int = R.id.toolbar
+
+    override fun getToolbarLayout(): Int = R.layout.base_toolbar
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         App.appComponent.inject(this)
-        binding = FragmentRandomCharacterBinding.inflate(inflater, container, false)
+        initToolbar()
+        setTitle(R.string.random_character_toolbar_title)
 
         visibleViews = listOf(
             binding.randomCharacterProgressbar,
@@ -43,7 +48,6 @@ class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
             visibleOnly(binding.randomCharacterProgressbar)
             presenter.getRandomCharacter()
         }
-        return binding.root
     }
 
     override fun hideCharacter() {
