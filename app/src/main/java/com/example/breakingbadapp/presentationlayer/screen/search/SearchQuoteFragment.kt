@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.example.breakingbadapp.R
 import com.example.breakingbadapp.databinding.FragmentSearchQuoteBinding
 import com.example.breakingbadapp.datalayer.response.Quote
 import com.example.breakingbadapp.presentationlayer.base.BaseFragment
@@ -25,6 +26,12 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
         QuoteListAdapter()
     }
 
+    override fun getToolbarContainer(): Int = R.id.toolbar_container
+
+    override fun getToolbarId(): Int = R.id.toolbar
+
+    override fun getToolbarLayout(): Int = R.layout.base_toolbar
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,17 +46,14 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
             binding.searchQuotesProgressbar
         )
 
-        binding.quotesRecycleview.apply {
-            adapter = viewAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        }
+        initRecycleView()
+        setOnSearchListener()
+        setOnEditorActionListener()
 
-        binding.searchQuotesButton.setOnClickListener {
-            visibleOnly(binding.searchQuotesProgressbar)
-            presenter.searchQuote(binding.characterNameEdit.text.toString())
-        }
+        return binding.root
+    }
 
+    private fun setOnEditorActionListener() {
         binding.characterNameEdit.setOnEditorActionListener { v, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
@@ -60,8 +64,26 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
             }
             return@setOnEditorActionListener false
         }
+    }
 
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
+        setTitle(R.string.search_quotes_toolbar_title)
+    }
+
+    private fun setOnSearchListener() {
+        binding.searchQuotesButton.setOnClickListener {
+            visibleOnly(binding.searchQuotesProgressbar)
+            presenter.searchQuote(binding.characterNameEdit.text.toString())
+        }
+    }
+
+    private fun initRecycleView() {
+        binding.quotesRecycleview.apply {
+            adapter = viewAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
     }
 
     override fun displayQuotesList(quotes: List<Quote>) {

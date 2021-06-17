@@ -4,6 +4,8 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.breakingbadapp.App
 import com.example.breakingbadapp.domainlayer.database.repository.CharacterResponseRepository
+import com.example.breakingbadapp.presentationlayer.screen.randomhistory.RandomHistoryFragment
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -16,10 +18,15 @@ class CharacterDetailPresenter(
     @Inject
     lateinit var repository: CharacterResponseRepository
 
+    @Inject
+    lateinit var router: Router
+
     init {
         App.appComponent.inject(this)
         getCharacterResponse()
     }
+
+    fun onBackButtonClick() = navigateToHistoryScreen()
 
     private fun getCharacterResponse() {
         repository.getById(responseId)
@@ -27,5 +34,9 @@ class CharacterDetailPresenter(
             .subscribe({ character ->
                 viewState.displayCharacter(character)
             }, { throwable: Throwable -> Timber.e(throwable)})
+    }
+
+    private fun navigateToHistoryScreen() {
+        router.navigateTo(RandomHistoryFragment.getScreen())
     }
 }

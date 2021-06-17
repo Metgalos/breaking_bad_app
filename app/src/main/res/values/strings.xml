@@ -3,7 +3,7 @@
     <string name="random_characters_text">Случайный персонаж</string>
     <string name="random_characters_name">Имя персонажа</string>
     <string name="random_character_image_description">Картинка случайного персонажа</string>
-    <string name="random_character_birthday">09-07-1958</string>
+    <string name="random_character_birthday">09–07–1958</string>
     <string name="character_birthday_label">День рождения: </string>
     <string name="character_status_label">Статус: </string>
     <string name="character_nickname_label">Прозвище: </string>
@@ -31,4 +31,9 @@
     <string name="cancel">Отмена</string>
     <string name="default_confirmation_message">Вы уверены?</string>
     <string name="clear_history_confirmation">Вы точно хотите очистить историю запросов?</string>
+    <string name="characters_toolbar_title">Персонажи сериала</string>
+    <string name="random_character_toolbar_title">Случайный персонаж</string>
+    <string name="history_toolbar_title">История</string>
+    <string name="search_quotes_toolbar_title">Поиск цитат</string>
+    <string name="search_quotes_search_button_description">Кнопка для поиска цитат по введенному персонажу</string>
 </resources>

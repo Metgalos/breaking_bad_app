@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.breakingbadapp.App
+import com.example.breakingbadapp.R
 import com.example.breakingbadapp.databinding.FragmentCharacterDetailBinding
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.datalayer.model.LoadPhotoConfig
@@ -25,6 +26,12 @@ class CharacterDetailFragment : BaseFragment(), CharacterDetailView {
 
     private lateinit var binding: FragmentCharacterDetailBinding
 
+    override fun getToolbarContainer(): Int = R.id.toolbar_container
+
+    override fun getToolbarId(): Int = R.id.toolbar
+
+    override fun getToolbarLayout(): Int = R.layout.base_toolbar
+
     @ProvidePresenter
     fun provideCharacterDetailPresenter(): CharacterDetailPresenter? {
         return arguments?.getInt(CHARACTER_RESPONSE_ID_ARG_KEY)?.let {
@@ -42,7 +49,13 @@ class CharacterDetailFragment : BaseFragment(), CharacterDetailView {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
+        initToolbarBackButton { presenter.onBackButtonClick() }
+    }
+
     override fun displayCharacter(character: CharacterResponse) {
+        setTitle(character.name)
         with(binding) {
             randomCharacterName.text = character.name ?: EMPTY_FIELD_TEXT
             randomCharacterBirthday.text = character.birthday ?: EMPTY_FIELD_TEXT

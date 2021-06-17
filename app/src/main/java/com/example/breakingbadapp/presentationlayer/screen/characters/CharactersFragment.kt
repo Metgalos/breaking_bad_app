@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.example.breakingbadapp.R
 import com.example.breakingbadapp.databinding.FragmentCharactersBinding
 import com.example.breakingbadapp.datalayer.response.SerialCharacter
 import com.example.breakingbadapp.presentationlayer.base.BaseFragment
@@ -25,12 +26,18 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
         CharactersAdapter()
     }
 
+    override fun getToolbarContainer(): Int = R.id.toolbar_container
+
+    override fun getToolbarId(): Int = R.id.toolbar
+
+    override fun getToolbarLayout(): Int = R.layout.base_toolbar
+
     @SuppressLint("WrongConstant")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCharactersBinding.inflate(inflater, container, false)
 
         with(binding.charactersList) {
@@ -40,6 +47,11 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
+        setTitle(R.string.characters_toolbar_title)
     }
 
     override fun addCharacters(characters: List<SerialCharacter>) {

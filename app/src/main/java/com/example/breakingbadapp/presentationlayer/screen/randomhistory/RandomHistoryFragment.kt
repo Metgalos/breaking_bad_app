@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.example.breakingbadapp.R
 import com.example.breakingbadapp.databinding.FragmentRandomHistoryBinding
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.datalayer.model.ConfirmationDialogOptions
@@ -28,10 +29,16 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
 
     private var confirmationDialog: ConfirmationDialogFragment? = null
 
+    override fun getToolbarContainer(): Int = R.id.toolbar_container
+
+    override fun getToolbarId(): Int = R.id.toolbar
+
+    override fun getToolbarLayout(): Int = R.layout.base_toolbar
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRandomHistoryBinding.inflate(inflater, container, false)
         visibleViews = listOf(
             binding.characterResponseRecycleView,
@@ -45,6 +52,11 @@ class RandomHistoryFragment : BaseFragment(), RandomHistoryView {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
+        setTitle(R.string.history_toolbar_title)
     }
 
     override fun displayCharacters(characters: List<CharacterResponse>) {

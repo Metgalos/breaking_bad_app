@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.breakingbadapp.App
+import com.example.breakingbadapp.R
 import com.example.breakingbadapp.databinding.FragmentRandomCharacterBinding
 import com.example.breakingbadapp.datalayer.model.LoadPhotoConfig
 import com.example.breakingbadapp.datalayer.response.SerialCharacter
@@ -24,6 +25,12 @@ class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
     lateinit var imageLoader: ImageLoader
 
     private lateinit var binding: FragmentRandomCharacterBinding
+
+    override fun getToolbarContainer(): Int = R.id.toolbar_container
+
+    override fun getToolbarId(): Int = R.id.toolbar
+
+    override fun getToolbarLayout(): Int = R.layout.base_toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +51,11 @@ class RandomCharacterFragment : BaseFragment(), RandomCharacterView {
             presenter.getRandomCharacter()
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
+        setTitle(R.string.random_character_toolbar_title)
     }
 
     override fun hideCharacter() {
