@@ -15,12 +15,13 @@ import com.example.breakingbadapp.presentationlayer.base.BaseFragment
 import com.example.breakingbadapp.presentationlayer.screen.search.adapter.QuoteListAdapter
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
-class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
+class SearchQuoteFragment : BaseFragment<FragmentSearchQuoteBinding>(), SearchQuoteView {
 
     @InjectPresenter
     lateinit var presenter: SearchQuotePresenter
 
-    private lateinit var binding: FragmentSearchQuoteBinding
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSearchQuoteBinding
+        get() = FragmentSearchQuoteBinding::inflate
 
     private val viewAdapter: QuoteListAdapter by lazy {
         QuoteListAdapter()
@@ -32,12 +33,9 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
 
     override fun getToolbarLayout(): Int = R.layout.base_toolbar
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSearchQuoteBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
+        setTitle(R.string.search_quotes_toolbar_title)
 
         visibleViews = listOf(
             binding.quotesRecycleview,
@@ -49,8 +47,6 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
         initRecycleView()
         setOnSearchListener()
         setOnEditorActionListener()
-
-        return binding.root
     }
 
     private fun setOnEditorActionListener() {
@@ -64,11 +60,6 @@ class SearchQuoteFragment : BaseFragment(), SearchQuoteView {
             }
             return@setOnEditorActionListener false
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initToolbar()
-        setTitle(R.string.search_quotes_toolbar_title)
     }
 
     private fun setOnSearchListener() {

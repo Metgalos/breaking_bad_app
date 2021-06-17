@@ -16,7 +16,7 @@ import com.example.breakingbadapp.presentationlayer.base.BaseFragment
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import javax.inject.Inject
 
-class CharacterDetailFragment : BaseFragment(), CharacterDetailView {
+class CharacterDetailFragment : BaseFragment<FragmentCharacterDetailBinding>(), CharacterDetailView {
 
     @InjectPresenter
     lateinit var presenter: CharacterDetailPresenter
@@ -24,7 +24,8 @@ class CharacterDetailFragment : BaseFragment(), CharacterDetailView {
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    private lateinit var binding: FragmentCharacterDetailBinding
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCharacterDetailBinding
+        get() = FragmentCharacterDetailBinding::inflate
 
     override fun getToolbarContainer(): Int = R.id.toolbar_container
 
@@ -39,19 +40,10 @@ class CharacterDetailFragment : BaseFragment(), CharacterDetailView {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        App.appComponent.inject(this)
-        binding = FragmentCharacterDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        App.appComponent.inject(this)
         initToolbar()
-        initToolbarBackButton { presenter.onBackButtonClick() }
+        initToolbarBackButton()
     }
 
     override fun displayCharacter(character: CharacterResponse) {

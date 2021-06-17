@@ -1,6 +1,5 @@
 package com.example.breakingbadapp.presentationlayer.screen.characters
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +14,7 @@ import com.example.breakingbadapp.presentationlayer.base.BaseFragment
 import com.example.breakingbadapp.presentationlayer.screen.characters.adapter.CharactersAdapter
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 
-class CharactersFragment : BaseFragment(), CharactersFragmentView {
-
-    private lateinit var binding: FragmentCharactersBinding
+class CharactersFragment : BaseFragment<FragmentCharactersBinding>(), CharactersFragmentView {
 
     @InjectPresenter
     lateinit var presenter: CharactersPresenter
@@ -26,32 +23,24 @@ class CharactersFragment : BaseFragment(), CharactersFragmentView {
         CharactersAdapter()
     }
 
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCharactersBinding
+        get() = FragmentCharactersBinding::inflate
+
     override fun getToolbarContainer(): Int = R.id.toolbar_container
 
     override fun getToolbarId(): Int = R.id.toolbar
 
     override fun getToolbarLayout(): Int = R.layout.base_toolbar
 
-    @SuppressLint("WrongConstant")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentCharactersBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
+        setTitle(R.string.characters_toolbar_title)
 
         with(binding.charactersList) {
             adapter = viewAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addOnScrollListener(presenter.getOnScrollListener())
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initToolbar()
-        setTitle(R.string.characters_toolbar_title)
     }
 
     override fun addCharacters(characters: List<SerialCharacter>) {

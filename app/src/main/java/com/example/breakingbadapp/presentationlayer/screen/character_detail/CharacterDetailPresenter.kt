@@ -26,17 +26,11 @@ class CharacterDetailPresenter(
         getCharacterResponse()
     }
 
-    fun onBackButtonClick() = navigateToHistoryScreen()
-
     private fun getCharacterResponse() {
         repository.getById(responseId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ character ->
                 viewState.displayCharacter(character)
             }, { throwable: Throwable -> Timber.e(throwable)})
-    }
-
-    private fun navigateToHistoryScreen() {
-        router.navigateTo(RandomHistoryFragment.getScreen())
     }
 }
