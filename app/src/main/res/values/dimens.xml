@@ -10,4 +10,6 @@
     <dimen name="medium_text">18sp</dimen>
     <dimen name="pro">18sp</dimen>
     <dimen name="confirmation_text_size">@dimen/medium_text</dimen>
+    <dimen name="image_default_elevation">10dp</dimen>
+    <dimen name="image_stroke_width">1dp</dimen>
 </resources>
