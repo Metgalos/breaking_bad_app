@@ -3,6 +3,7 @@ package com.example.breakingbadapp.presentationlayer.base
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -79,6 +80,12 @@ abstract class BaseFragment<Binding : ViewBinding> : MvpAppCompatFragment(), Bas
         toolbar?.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
+    }
+
+    fun initMenu(menuResource: Int) {
+        val toolbar = view?.findViewById<Toolbar>(getToolbarId())
+        toolbar?.inflateMenu(menuResource)
+        toolbar?.setOnMenuItemClickListener { onOptionsItemSelected(it) }
     }
 
     fun visibleOnly(view: View) {

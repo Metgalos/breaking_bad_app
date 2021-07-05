@@ -1,4 +1,4 @@
-package com.example.breakingbadapp.domainlayer.repository
+package com.example.breakingbadapp.domainlayer.network.breakingbad.repository
 
 import com.example.breakingbadapp.datalayer.response.SerialCharacter
 import com.example.breakingbadapp.domainlayer.network.breakingbad.BreakingBadApi
