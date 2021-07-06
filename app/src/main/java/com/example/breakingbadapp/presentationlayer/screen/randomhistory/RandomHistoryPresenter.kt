@@ -9,18 +9,18 @@ import com.example.breakingbadapp.R
 import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.datalayer.model.ConfirmationDialogOptions
 import com.example.breakingbadapp.domainlayer.database.repository.CharacterResponseRepository
+import com.example.breakingbadapp.domainlayer.database.repository.HistoryChangeObserver
 import com.example.breakingbadapp.presentationlayer.screen.character_detail.CharacterDetailFragment
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryAdapter
 import com.example.breakingbadapp.presentationlayer.screen.randomhistory.adapter.RandomHistoryViewHolderListener
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
-class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
+class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>(), HistoryChangeObserver {
 
     @Inject
     lateinit var repository: CharacterResponseRepository
@@ -36,11 +36,21 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         App.appComponent.inject(this)
+        repository.historyChange.addObserver(this)
         getHistoryItems(nextPage)
     }
 
-    fun getOnScrollListener(): RecyclerView.OnScrollListener =
-        object : RecyclerView.OnScrollListener() {
+    override fun onDeleteItem(characterResponse: CharacterResponse) {
+        characters.remove(characterResponse)
+        viewState.displayCharacters(characters)
+    }
+
+    override fun onDestroy() {
+        repository.historyChange.removeObserver(this)
+    }
+
+    fun getOnScrollListener(): RecyclerView.OnScrollListener {
+        return object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val lastVisible =
                     (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
@@ -50,6 +60,7 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
                 getHistoryItems(nextPage) { recyclerView.removeOnScrollListener(this) }
             }
         }
+    }
 
     fun getAdapterListener(): RandomHistoryViewHolderListener {
         return object : RandomHistoryViewHolderListener {
@@ -76,8 +87,6 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
             }, { throwable: Throwable? -> Timber.e(throwable) })
     }
 
-    fun hideConfirmation() = viewState.hideConfirmation()
-
     private fun remove(character: CharacterResponse) {
         repository.remove(character)
             .subscribeOn(Schedulers.io())
@@ -88,15 +97,19 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
             }, { throwable: Throwable -> Timber.e(throwable) })
     }
 
-    private fun getHistoryItems(page: Int, onLastPage: () -> Unit = {}): Disposable {
+    private fun getHistoryItems(page: Int, onLastPage: () -> Unit = {}) {
         isLoading = true
-        return repository.getPaged(page, PAGE_SIZE)
+        repository.getPaged(page, PAGE_SIZE)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ characters ->
                 if (characters.size < PAGE_SIZE) onLastPage()
                 nextPage++
-                this.characters.addAll(characters)
+                characters.forEach {
+                    if (!this.characters.contains(it)) {
+                        this.characters.add(it)
+                    }
+                }
                 viewState.displayCharacters(this.characters)
                 isLoading = false
             }, { throwable: Throwable ->

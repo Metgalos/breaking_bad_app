@@ -73,7 +73,7 @@ class RandomHistoryFragment : BaseFragment<FragmentRandomHistoryBinding>(), Rand
             }
 
             override fun onNegativeAnswer() {
-                presenter.hideConfirmation()
+                hideConfirmation()
             }
         }
         confirmationDialog = ConfirmationDialogFragment.newInstance(options, listener).also {

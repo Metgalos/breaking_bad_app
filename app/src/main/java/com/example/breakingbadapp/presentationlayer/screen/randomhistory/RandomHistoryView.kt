@@ -6,13 +6,10 @@ import com.example.breakingbadapp.datalayer.entity.CharacterResponse
 import com.example.breakingbadapp.datalayer.model.ConfirmationDialogOptions
 import com.example.breakingbadapp.presentationlayer.base.BaseFragmentView
 
+@StateStrategyType(AddToEndSingleStrategy::class)
 interface RandomHistoryView : BaseFragmentView {
     fun displayCharacters(characters: List<CharacterResponse>)
     fun displayEmptyHistoryText()
-
-    @StateStrategyType(AddToEndSingleStrategy::class)
     fun displayConfirmation(options: ConfirmationDialogOptions)
-
-    @StateStrategyType(AddToEndSingleStrategy::class)
     fun hideConfirmation()
 }

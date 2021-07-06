@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.breakingbadapp.App
 import com.example.breakingbadapp.domainlayer.database.repository.CharacterResponseRepository
-import com.example.breakingbadapp.domainlayer.repository.CharacterRepository
+import com.example.breakingbadapp.domainlayer.network.breakingbad.repository.CharacterRepository
 import com.example.breakingbadapp.extension.toCharacterResponse
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.schedulers.Schedulers

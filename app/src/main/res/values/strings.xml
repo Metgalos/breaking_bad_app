@@ -36,4 +36,6 @@
     <string name="history_toolbar_title">История</string>
     <string name="search_quotes_toolbar_title">Поиск цитат</string>
     <string name="search_quotes_search_button_description">Кнопка для поиска цитат по введенному персонажу</string>
+    <string name="delete_item">Удалить</string>
+    <string name="delete_item_success">Успешно удален</string>
 </resources>

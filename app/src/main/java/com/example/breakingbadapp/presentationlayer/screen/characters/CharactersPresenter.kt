@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.breakingbadapp.App
-import com.example.breakingbadapp.domainlayer.repository.CharacterRepository
+import com.example.breakingbadapp.domainlayer.network.breakingbad.repository.CharacterRepository
 import com.example.breakingbadapp.presentationlayer.screen.characters.adapter.CharactersAdapter
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import timber.log.Timber

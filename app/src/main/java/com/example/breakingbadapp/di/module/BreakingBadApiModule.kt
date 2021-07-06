@@ -1,8 +1,8 @@
 package com.example.breakingbadapp.di.module
 
 import com.example.breakingbadapp.domainlayer.network.breakingbad.BreakingBadApi
-import com.example.breakingbadapp.domainlayer.repository.CharacterRepository
-import com.example.breakingbadapp.domainlayer.repository.QuoteRepository
+import com.example.breakingbadapp.domainlayer.network.breakingbad.repository.CharacterRepository
+import com.example.breakingbadapp.domainlayer.network.breakingbad.repository.QuoteRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

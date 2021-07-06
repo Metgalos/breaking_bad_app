@@ -1,5 +1,6 @@
 package com.example.breakingbadapp.di.module
 
+import androidx.room.Room
 import com.example.breakingbadapp.App
 import com.example.breakingbadapp.domainlayer.database.AppDatabase
 import com.example.breakingbadapp.domainlayer.database.dao.CharacterResponseDao
@@ -14,7 +15,11 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideAppDatabase(app: App): AppDatabase =
-        AppDatabase.getDatabase(app.baseContext)
+        Room.databaseBuilder(
+            app.applicationContext,
+            AppDatabase::class.java,
+            AppDatabase.DB_NAME
+        ).build()
 
     @Provides
     @Singleton
