@@ -20,7 +20,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
-class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
+class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>(), HistoryChangeObserver {
 
     @Inject
     lateinit var repository: CharacterResponseRepository
@@ -36,13 +36,17 @@ class RandomHistoryPresenter : MvpPresenter<RandomHistoryView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         App.appComponent.inject(this)
-        repository.historyChange.addObserver(object : HistoryChangeObserver {
-            override fun onDeleteItem(characterResponse: CharacterResponse) {
-                characters.remove(characterResponse)
-                viewState.displayCharacters(characters)
-            }
-        })
+        repository.historyChange.addObserver(this)
         getHistoryItems(nextPage)
+    }
+
+    override fun onDeleteItem(characterResponse: CharacterResponse) {
+        characters.remove(characterResponse)
+        viewState.displayCharacters(characters)
+    }
+
+    override fun onDestroy() {
+        repository.historyChange.removeObserver(this)
     }
 
     fun getOnScrollListener(): RecyclerView.OnScrollListener {
